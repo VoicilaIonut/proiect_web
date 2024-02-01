@@ -38,9 +38,19 @@ const apiService = {
                     "Content-Type": "application/json",
                 },
             });
-            return await response.json();
+            if (!response.ok) {
+                return { success: false, message: `Eroare. HTTP error! status: ${response.status}` };
+            }
+
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                return { success: true, message: "ok" };
+            } else {
+                return { success: true, message: await response.text() };
+            }
         } catch (e) {
-            return false;
+            console.error(e);
+            return { success: false, message: e.message };
         }
     },
 

@@ -19,8 +19,6 @@ namespace Proiect.Data
             : base(options)
         { }
 
-
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=database_test;Trusted_Connection=True;");
@@ -37,20 +35,6 @@ namespace Proiect.Data
                 .WithOne(a => a.User)
                 .HasForeignKey<Address>(a => a.UserId);
 
-            /*modelBuilder.Entity<UserRole>()
-                .HasKey(ur => new { ur.UserId, ur.RoleId });
-
-            modelBuilder.Entity<UserRole>()
-                .HasOne(ur => ur.User)
-                .WithMany(u => u.UserRoles)
-                .HasForeignKey(ur => ur.UserId);
-
-            modelBuilder.Entity<UserRole>()
-                .HasOne(ur => ur.Role)
-                .WithMany(r => r.UserRoles)
-                .HasForeignKey(ur => ur.RoleId);*/
-
-
             modelBuilder.Entity<Game>()
                .HasOne(g => g.Player1)
                .WithMany(u => u.Player1Games)
@@ -62,17 +46,6 @@ namespace Proiect.Data
                 .WithMany(u => u.Player2Games)
                 .HasForeignKey(g => g.Player2Id)
                 .OnDelete(DeleteBehavior.Restrict); // Do not cascade on delete for Player2;
-
-           
-            /* modelBuilder.Entity<Board>()
-                .HasOne(b => b.Game)
-                .WithMany(g => g.Boards)
-                .HasForeignKey(b => b.GameId);
-
-            modelBuilder.Entity<Cell>()
-                .HasOne(c => c.Board)
-                .WithMany(b => b.Cells)
-                .HasForeignKey(c => c.BoardId);*/
 
             modelBuilder.Entity<Move>().HasKey(move => new { move.MoveId, move.GameId, move.UserId });
             modelBuilder.Entity<Move>()

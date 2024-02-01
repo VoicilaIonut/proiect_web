@@ -2,26 +2,42 @@ import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { Routes } from "../../utils/routes-definition";
 import "./register.css";
-//import register from "../../services/registerApiCall";
 import apiService from '../../services/apiService';
-
-//componenta trebuie sa fie definita exportata in acest fell pentru lazy loading
-//https://reactrouter.com/en/main/route/lazy
 
 export const Component = () => {
     const [Username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [Email, setEmail] = useState("");
+    const [Street, setStreet] = useState("");
+    const [City, setCity] = useState("");
+    const [Country, setCountry] = useState("");
     const [message, setMessage] = useState(null);
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         e.preventDefault();
         const { id, value } = e.target;
-        if (id === "Username") {
-            setUsername(value);
-        }
-        if (id === "password") {
-            setPassword(value);
+        switch (id) {
+            case 'Username':
+                setUsername(value);
+                break;
+            case 'password':
+                setPassword(value);
+                break;
+            case 'Email':
+                setEmail(value);
+                break;
+            case 'Street':
+                setStreet(value);
+                break;
+            case 'City':
+                setCity(value);
+                break;
+            case 'Country':
+                setCountry(value);
+                break;
+            default:
+                break;
         }
     };
 
@@ -30,10 +46,14 @@ export const Component = () => {
         let registerData = {
             Username: Username,
             password: password,
+            Email: Email,
+            Street: Street,
+            City: City,
+            Country: Country
         };
         const answer = await apiService.register(registerData);
-        if (answer.id && answer.Username) {
-            setMessage("Cont creat cu succes. Acum va puteti loga in cont.");
+        if (answer.success) {
+            setMessage("Account created successfully. You can now log in.");
         } else if (answer.message) {
             setMessage(answer.message);
         }
@@ -60,11 +80,11 @@ export const Component = () => {
                     name="Username"
                     id="Username"
                     value={Username}
-                    onChange={(e) => handleInputChange(e)}
+                    onChange={handleInputChange}
                     required
                 ></input>
 
-                <label htmlFor="psw">
+                <label htmlFor="password">
                     <b>Password</b>
                 </label>
                 <input
@@ -73,9 +93,62 @@ export const Component = () => {
                     name="password"
                     id="password"
                     value={password}
-                    onChange={(e) => handleInputChange(e)}
+                    onChange={handleInputChange}
                     required
                 ></input>
+
+                <label htmlFor="Email">
+                    <b>Email</b>
+                </label>
+                <input
+                    type="email"
+                    placeholder="Enter Email"
+                    name="Email"
+                    id="Email"
+                    value={Email}
+                    onChange={handleInputChange}
+                    required
+                ></input>
+
+                <label htmlFor="Street">
+                    <b>Street</b>
+                </label>
+                <input
+                    type="text"
+                    placeholder="Enter Street"
+                    name="Street"
+                    id="Street"
+                    value={Street}
+                    onChange={handleInputChange}
+                    required
+                ></input>
+
+                <label htmlFor="City">
+                    <b>City</b>
+                </label>
+                <input
+                    type="text"
+                    placeholder="Enter City"
+                    name="City"
+                    id="City"
+                    value={City}
+                    onChange={handleInputChange}
+                    required
+                ></input>
+
+                <label htmlFor="Country">
+                    <b>Country</b>
+                </label>
+                <input
+                    type="text"
+                    placeholder="Enter Country"
+                    name="Country"
+                    id="Country"
+                    value={Country}
+                    onChange={handleInputChange}
+                    required
+                ></input>
+
                 <button type="submit" onClick={handleSubmit}>
                     Register
                 </button>
@@ -90,5 +163,3 @@ export const Component = () => {
         </div>
     );
 };
-
-// export default Register;
