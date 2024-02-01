@@ -1,0 +1,8 @@
+.register {
+    display: flex;
+    flex-direction: column;
+}
+
+.register > label{
+    margin: 15px;;
+}

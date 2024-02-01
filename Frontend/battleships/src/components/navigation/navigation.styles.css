@@ -1,0 +1,37 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+  }
+  
+  h1 {
+    margin: 0;
+  }
+  
+  button {
+    border: none;
+    outline: none;
+    font-size: 30px;
+  }
+  
+  .actions-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .active {
+    color: blue !important;
+  }
+  
+  .pending {
+    color: green !important;
+  }
+  
+  .link {
+    margin-right: 20px;
+    color: #000;
+    text-decoration: none;
+  }
+  
